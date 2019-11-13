@@ -2,6 +2,10 @@ package br.net.jassa.cursomc.dto;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.Length;
+
 import br.net.jassa.cursomc.domain.Categoria;
 
 public class CategoriaDTO implements Serializable {
@@ -9,6 +13,9 @@ public class CategoriaDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private Integer id;
+	
+	@NotNull(message = "Preenchimento obrigatório")
+	@Length(min = 6, max=80, message="O tamanho deve ser entre 5 e 80 caracteres")
 	private String nome;
 
 	public CategoriaDTO() {
