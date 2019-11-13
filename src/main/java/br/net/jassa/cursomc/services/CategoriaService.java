@@ -22,10 +22,6 @@ public class CategoriaService {
 	@Autowired
 	private CategoriaRepository repo;
 	
-	public List<Categoria> findAll() {
-		return repo.findAll();
-	}	
-
 	public Categoria find(Integer id) {
 		Optional<Categoria> obj = repo.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
@@ -50,6 +46,10 @@ public class CategoriaService {
 		    throw new DataIntegrityException("Não é possível excluir uma categoria que possui produtos");	
 		}
 	}
+	
+	public List<Categoria> findAll() {
+		return repo.findAll();
+	}		
 	
 	public Page<Categoria> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);

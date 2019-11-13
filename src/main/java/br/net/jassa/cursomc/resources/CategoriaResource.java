@@ -29,19 +29,6 @@ public class CategoriaResource {
 	@Autowired
 	private CategoriaService service;
 	
-	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<List<CategoriaDTO>> findAll() {
-		List<Categoria> list = service.findAll();
-		/* Padrão DTO -> cria uma outra classe para apenas trabalhar com os dados da classe original
-		 * P. Ex. Categoria traz os produtos da categoria, mas não queremos, então criamos outra classe CategoriaDTO
-		 * apenas com os dados que queremos mostrar e lá na classe CategoriaDTO o construtor recebe o Categoria */
-		List<CategoriaDTO> listDto = list.stream()
-				                         .map(obj -> new CategoriaDTO(obj)) 
-				                         .collect(Collectors.toList());
-		return ResponseEntity.ok()
-				             .body(listDto);
-	}	
-	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<Categoria> find(@PathVariable Integer id) {
 		Categoria obj = service.find(id);
@@ -73,6 +60,19 @@ public class CategoriaResource {
 		service.delete(id);
 		return ResponseEntity.noContent().build();
 	}
+	
+	@RequestMapping(method = RequestMethod.GET)
+	public ResponseEntity<List<CategoriaDTO>> findAll() {
+		List<Categoria> list = service.findAll();
+		/* Padrão DTO -> cria uma outra classe para apenas trabalhar com os dados da classe original
+		 * P. Ex. Categoria traz os produtos da categoria, mas não queremos, então criamos outra classe CategoriaDTO
+		 * apenas com os dados que queremos mostrar e lá na classe CategoriaDTO o construtor recebe o Categoria */
+		List<CategoriaDTO> listDto = list.stream()
+				                         .map(obj -> new CategoriaDTO(obj)) 
+				                         .collect(Collectors.toList());
+		return ResponseEntity.ok()
+				             .body(listDto);
+	}		
 	
 	@RequestMapping(value = "/page",method = RequestMethod.GET)
 	public ResponseEntity<Page<CategoriaDTO>> findPage(
