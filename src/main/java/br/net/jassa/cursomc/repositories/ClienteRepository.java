@@ -9,6 +9,10 @@ import br.net.jassa.cursomc.domain.Cliente;
 @Repository
 public interface ClienteRepository extends JpaRepository<Cliente, Integer>{
 	
+	
+	/* é uma interface, mas o spring automaticamente cria, basta ver na documentação do spring data jpa - reference documentation
+	 * item 4.3 - query methods --> supported keywords inside method names
+	 *  */
 	@Transactional(readOnly=true)
 	Cliente findByEmail(String email);
 }
