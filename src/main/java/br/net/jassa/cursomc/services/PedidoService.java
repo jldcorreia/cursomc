@@ -41,7 +41,7 @@ public class PedidoService {
 
 	}
 	
-	@Transactional(readOnly = true)
+	@Transactional
 	public Pedido insert(Pedido obj) {
 		obj.setId(null);
 		obj.setInstante(new Date());
