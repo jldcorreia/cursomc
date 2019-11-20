@@ -15,6 +15,7 @@ import org.thymeleaf.context.Context;
 
 import br.net.jassa.cursomc.domain.Pedido;
 
+
 public abstract class AbstractEmailService implements EmailService {
 	
 	@Value("${default.sender}")
@@ -23,6 +24,7 @@ public abstract class AbstractEmailService implements EmailService {
 	@Autowired
 	private TemplateEngine templateEngine;
 	
+
 	@Autowired
 	private JavaMailSender javaMailSender;
 	
