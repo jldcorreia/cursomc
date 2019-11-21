@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -24,6 +25,7 @@ import br.net.jassa.cursomc.security.JWTUtil;
 
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	
 	@Autowired
@@ -44,9 +46,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 
 	private static final String[] PUBLIC_MATCHERS_GET = {
 			"/produtos/**",
-			"/categorias/**",
-			"/clientes/**"
+			"/categorias/**"
 		};	
+	
+	private static final String[] PUBLIC_MATCHERS_POST = {
+			"/clientes/**"
+		};		
 	
 	/* neste método configura que recursos serão liberados ou bloqueados */
 	@Override
@@ -62,6 +67,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		http.cors() // chama o corConfigurationSource abaixo para liberar requisições de qualquer origem
 		    .and().csrf().disable();  // configura o backend para desabilitar a proteção de ataques CSRF baseado no armazenamento da autenticação e sessão 
 		http.authorizeRequests()
+		    .antMatchers(HttpMethod.POST, PUBLIC_MATCHERS_POST).permitAll()
 		    .antMatchers(HttpMethod.GET, PUBLIC_MATCHERS_GET).permitAll()
 		    .antMatchers(PUBLIC_MATCHERS).permitAll()
 		    .anyRequest().authenticated();
